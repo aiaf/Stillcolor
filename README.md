@@ -12,7 +12,7 @@ Stillcolor activates on login and whenever a new display connects.
 Tested on macOS 14 with M2 and M3 Max.
 
 ## Installation
-Head over to the Releases page and download the zip. Unzip Stillcolor.app to your Applications folder and launch.
+Head over to [Releases](https://github.com/aiaf/Stillcolor/releases) and download the latest zip. Unzip Stillcolor.app to your Applications folder and launch.
 
 Select “Launch a Login” to make this app run automatically and disable dithering whenever your computer starts.
 
