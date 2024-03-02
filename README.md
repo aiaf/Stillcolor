@@ -1,18 +1,44 @@
+
+
 # Stillcolor for macOS
-Save your eyesight and disable temporal dithering on your Mac with Stillcolor, a lightweight menu bar app for macOS running on Apple Silicon M1/M2/M3.
+<img src="https://github.com/aiaf/Stillcolor/assets/119462/26f4fe39-44bb-436d-9348-fc5ba9e8dfde" align=left width=256>
+Save your eyesight and disable temporal dithering on your Mac with Stillcolor, a lightweight menu bar app for macOS running on Apple M1/M2/M3.  
 
-[Heaps of people](https://ledstrain.org/) are sensitive to [temporal dithering](https://en.wikipedia.org/wiki/Frame_rate_control) which alternates pixel colors at the speed of your display's refresh rate, causing eyestrain and various other symptoms.
+* * *
 
-Stillcolor activates on login and whenever a new display connects.
+  
+
+**Why?**
+
+
+[Heaps](https://ledstrain.org/) of [people](https://www.reddit.com/r/PWM_Sensitive) are sensitive to certain properties of modern displays such as blue light, [PWM](https://www.notebookcheck.net/Why-Pulse-Width-Modulation-PWM-is-such-a-headache.270240.0.html), and [temporal dithering (FRC)](https://en.wikipedia.org/wiki/Frame_rate_control) which alternates pixel colors at the speed of your display's refresh rate, tricking your eyes into perceiving a wider range of colors than the display can actually produce.
+
+These sensitivities manifest as eyestrain and fatigue, dry eyes, headache, nausea, inability to focus, and other physical symptoms.
+
+There's even a [petition](https://www.change.org/p/apple-add-accessibility-options-to-reduce-eye-strain-and-support-vision-disability-sufferers) urging Apple to make use of these technologies known and to implement accessbility options.
+
+While there are apps and accessories to help dim blue light, and plenty of flicker-free monitors, temporal dithering can happen at the GPU level with no visible option to disable it (such as the case in Apple silicon Macs).
+
+Stillcolor allows you to disable temporal dithering from user space, helping massively reduce eyestrain with little to no degradation in image quality.
+
+## Story and write-up
+[Thread on LEDStrain](https://ledstrain.org/d/2686-i-disabled-dithering-on-apple-silicon-introducing-stillcolor-macos-m1m2m3/)
+
+## Stillcolor in action
+See this timeblend video of how your screen looks like with temporal dithering vs without:
+
+[https://www.youtube.com/watch?v=D9AZqJH-U-U](https://www.youtube.com/watch?v=D9AZqJH-U-U) 
 
 ## Requirements
-- Apple Silicon e.g. M1/M2/M3
+- Apple silicon Mac e.g. M1/M2/M3
 - macOS >= 13
 
 Tested on macOS 14 with M2 and M3 Max.
 
 ## Installation
-Head over to [Releases](https://github.com/aiaf/Stillcolor/releases) and download the latest zip. Unzip Stillcolor.app to your Applications folder and launch.
+Head over to [Releases](https://github.com/aiaf/Stillcolor/releases) and download the latest zip.
+
+Unzip Stillcolor.app to your Applications folder and launch.
 
 Select “Launch a login” to make this app run automatically and disable dithering whenever your computer starts.
 
@@ -41,8 +67,8 @@ A more complicated approach is to use a [video capture card](https://www.blackma
 ## Roadmap
 - Make this app compatible macOS 11+
 - Test and verify various Macs M1 Pro, Max, etc
-- Make it work with Intel Macs?
 - Create a foolproof and easy dithering test
+- Intel Macs?
 - iOS?
 
 
