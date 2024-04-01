@@ -9,14 +9,16 @@ import SwiftUI
 import LaunchAtLogin
 
 @main
-struct Stillcolor: App {
+struct StillcolorApp: App {
     @AppStorage("disableDithering") var disableDithering: Bool = true
+    @AppStorage("disableUniformity2D") var disableUniformity2D: Bool = false
     
     var detector = ScreenDetector();
     
     init() {
         detector.addObervers()
-        IOMFBShiv.enableDisableDithering(disableDithering)
+        Stillcolor.enableDisableDithering(disableDithering)
+        Stillcolor.enableDisableUniformity2D(disableUniformity2D)
     }
     
     var body: some Scene {
@@ -28,9 +30,27 @@ struct Stillcolor: App {
                 get: { disableDithering },
                 set: {
                     disableDithering = $0
-                    IOMFBShiv.enableDisableDithering(disableDithering)
+                    Stillcolor.enableDisableDithering(disableDithering)
                 }
             ))
+            
+            Toggle("Disable uniformity2D", isOn: .init(
+                get: { disableUniformity2D },
+                set: {
+                    disableUniformity2D = $0
+                    Stillcolor.enableDisableUniformity2D(disableUniformity2D)
+                }
+            ))
+            
+            Label {
+                Text("(Experimental) Stop built-in display from\nusing lower brightness levels around the edges")
+                    .font(.caption)
+                    .fontWeight(.thin)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.leading)
+            } icon: {
+            }
+            
             Divider()
             LaunchAtLogin.Toggle()
             Divider()

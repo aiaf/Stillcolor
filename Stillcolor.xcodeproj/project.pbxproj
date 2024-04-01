@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		384543E92BB5F0EB00E9C709 /* IORegistryPropertyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384543E82BB5F0EB00E9C709 /* IORegistryPropertyHelper.swift */; };
 		3865859A2B8B55CC00812B02 /* StillcolorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386585992B8B55CC00812B02 /* StillcolorApp.swift */; };
 		3865859E2B8B55CD00812B02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3865859D2B8B55CD00812B02 /* Assets.xcassets */; };
 		386585C62B8B8A1F00812B02 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 386585C52B8B8A1F00812B02 /* LaunchAtLogin */; };
-		386585C82B8BF53300812B02 /* IOMFBShiv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386585C72B8BF53300812B02 /* IOMFBShiv.swift */; };
+		386585C82B8BF53300812B02 /* Stillcolor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386585C72B8BF53300812B02 /* Stillcolor.swift */; };
 		386585CA2B8BF5AC00812B02 /* ScreenDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386585C92B8BF5AC00812B02 /* ScreenDetector.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,12 +28,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		384543E82BB5F0EB00E9C709 /* IORegistryPropertyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IORegistryPropertyHelper.swift; sourceTree = "<group>"; };
 		386585962B8B55CC00812B02 /* Stillcolor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stillcolor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386585992B8B55CC00812B02 /* StillcolorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StillcolorApp.swift; sourceTree = "<group>"; };
 		3865859D2B8B55CD00812B02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		386585A22B8B55CD00812B02 /* Stillcolor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Stillcolor.entitlements; sourceTree = "<group>"; };
 		386585C22B8B885000812B02 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
-		386585C72B8BF53300812B02 /* IOMFBShiv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOMFBShiv.swift; sourceTree = "<group>"; };
+		386585C72B8BF53300812B02 /* Stillcolor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stillcolor.swift; sourceTree = "<group>"; };
 		386585C92B8BF5AC00812B02 /* ScreenDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDetector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,8 +73,9 @@
 				386585992B8B55CC00812B02 /* StillcolorApp.swift */,
 				3865859D2B8B55CD00812B02 /* Assets.xcassets */,
 				386585A22B8B55CD00812B02 /* Stillcolor.entitlements */,
-				386585C72B8BF53300812B02 /* IOMFBShiv.swift */,
+				386585C72B8BF53300812B02 /* Stillcolor.swift */,
 				386585C92B8BF5AC00812B02 /* ScreenDetector.swift */,
+				384543E82BB5F0EB00E9C709 /* IORegistryPropertyHelper.swift */,
 			);
 			path = Stillcolor;
 			sourceTree = "<group>";
@@ -163,8 +166,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				386585CA2B8BF5AC00812B02 /* ScreenDetector.swift in Sources */,
-				386585C82B8BF53300812B02 /* IOMFBShiv.swift in Sources */,
+				386585C82B8BF53300812B02 /* Stillcolor.swift in Sources */,
 				3865859A2B8B55CC00812B02 /* StillcolorApp.swift in Sources */,
+				384543E92BB5F0EB00E9C709 /* IORegistryPropertyHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,7 +304,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -315,8 +319,8 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = makkuk.com.Stillcolor;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.makkuk.Stillcolor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -337,7 +341,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -352,8 +356,8 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = makkuk.com.Stillcolor;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.makkuk.Stillcolor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

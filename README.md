@@ -19,7 +19,11 @@ There's even a [petition](https://www.change.org/p/apple-add-accessibility-optio
 
 While there are apps and accessories to help dim blue light, and plenty of flicker-free monitors, temporal dithering can happen at the GPU level with no visible option to disable it (such as the case in Apple silicon Macs).
 
-Stillcolor allows you to disable temporal dithering from user space, helping massively reduce eyestrain with little to no degradation in image quality.
+Stillcolor allows you to disable GPU/DCP-generated temporal dithering from user space, helping massively reduce eyestrain with little to no degradation in image quality.
+
+## Caveats
+Note that while Stillcolor is 100% confirmed to remove GPU/DCP-generated temporal dithering, which is applied directly to the pixel framebuffer right before it's sent to the external/embedded display, the display panel's timing contoller (TCON) may still apply its own dithering/FRC to achieve advertised color bit depth. Whether or not Apple displays actively use TCON dithering in addition to DCP/GPU dithering is under investigation.
+
 
 ## Story and write-up
 [Thread on LEDStrain](https://ledstrain.org/d/2686-i-disabled-dithering-on-apple-silicon-introducing-stillcolor-macos-m1m2m3/)
@@ -32,8 +36,6 @@ See this timeblend video of how your screen looks like with temporal dithering v
 ## Requirements
 - Apple silicon Mac e.g. M1/M2/M3
 - macOS >= 13
-
-Tested on macOS 14 with M2 and M3 Max.
 
 ## Installation
 Head over to [Releases](https://github.com/aiaf/Stillcolor/releases) and download the latest zip.
@@ -66,7 +68,6 @@ A more complicated approach is to use a [video capture card](https://www.blackma
 
 ## Roadmap
 - Make this app compatible macOS 11+
-- Test and verify various Macs M1 Pro, Max, etc
 - Create a foolproof and easy dithering test
 - Intel Macs?
 - iOS?

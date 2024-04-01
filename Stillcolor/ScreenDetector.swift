@@ -9,17 +9,28 @@
 import Cocoa
 
 class ScreenDetector {
+    
+    var timer: Timer?
 
     static let callback: CGDisplayReconfigurationCallBack = { (displayId, flags, userInfo) in
         guard let opaque = userInfo else {
             return
         }
-        let mySelf = Unmanaged<ScreenDetector>.fromOpaque(opaque).takeUnretainedValue()
         
-        if flags.contains(.addFlag)  {
-            IOMFBShiv.enableDisableDithering(UserDefaults.standard.bool(forKey: "disableDithering"))
+        let passedSelf = Unmanaged<ScreenDetector>.fromOpaque(opaque).takeUnretainedValue()
+        
+        if flags.contains(.addFlag) || flags.contains(.removeFlag) || flags.contains(.enabledFlag) || flags.contains(.disabledFlag) {
+            if passedSelf.timer?.isValid != true {
+                passedSelf.timer = Timer.scheduledTimer(timeInterval: 1.0, target: passedSelf, selector: #selector(ensurePreferences), userInfo: nil, repeats: false)
+            }
         }
     }
+    
+    @objc func ensurePreferences() {
+        Stillcolor.enableDisableDithering(UserDefaults.standard.bool(forKey: "disableDithering"))
+        self.timer?.invalidate()
+    }
+    
 
     func addObervers() {
         let userData = Unmanaged<ScreenDetector>.passUnretained(self).toOpaque()
@@ -30,5 +41,4 @@ class ScreenDetector {
         let userData = Unmanaged<ScreenDetector>.passUnretained(self).toOpaque()
         CGDisplayRemoveReconfigurationCallback(ScreenDetector.callback, userData)
     }
-
 }
