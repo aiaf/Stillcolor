@@ -2,7 +2,7 @@
 
 # Stillcolor for macOS
 <img src="https://github.com/aiaf/Stillcolor/assets/119462/26f4fe39-44bb-436d-9348-fc5ba9e8dfde" align=left width=256>
-Save your eyesight and disable temporal dithering on your Mac with Stillcolor, a lightweight menu bar app for macOS running on Apple M1/M2/M3.  
+Save your eyesight and disable temporal dithering on your Mac with Stillcolor, a lightweight menu bar app for macOS running on Apple M1/M2/M3/M4.  
 
 * * *
 
@@ -34,7 +34,7 @@ See this timeblend video of how your screen looks like with temporal dithering v
 [https://www.youtube.com/watch?v=D9AZqJH-U-U](https://www.youtube.com/watch?v=D9AZqJH-U-U) 
 
 ## Requirements
-- Apple silicon Mac e.g. M1/M2/M3
+- Apple silicon Mac e.g. M1/M2/M3/M4
 - macOS >= 13
 
 ## Installation
