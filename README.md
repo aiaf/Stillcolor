@@ -42,7 +42,7 @@ Head over to [Releases](https://github.com/aiaf/Stillcolor/releases) and downloa
 
 Unzip Stillcolor.app to your Applications folder and launch.
 
-Select “Launch a login” to make this app run automatically and disable dithering whenever your computer starts.
+Select “Launch at login” to make this app run automatically and disable dithering whenever your computer starts.
 
 ## Verifying status of temporal dithering
 
