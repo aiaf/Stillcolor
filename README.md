@@ -46,7 +46,7 @@ Select “Launch a login” to make this app run automatically and disable dithe
 
 ## Verifying status of temporal dithering
 
-To check weather the app did the job, run the following in Terminal:
+To check whether the app did the job, run the following in Terminal:
 
 `ioreg -lw0 | grep -i enableDither`
 
