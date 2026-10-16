@@ -27,7 +27,11 @@ class ScreenDetector {
     }
     
     @objc func ensurePreferences() {
-        Stillcolor.enableDisableDithering(UserDefaults.standard.bool(forKey: "disableDithering"))
+        // @AppStorage defaults aren't written to UserDefaults, so fall back to the same default (true)
+        Stillcolor.enableDisableDithering(
+            UserDefaults.standard.object(forKey: "disableDithering") as? Bool ?? true,
+            externalOnly: UserDefaults.standard.bool(forKey: "ditherExternalOnly")
+        )
         self.timer?.invalidate()
     }
     

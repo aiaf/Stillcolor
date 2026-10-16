@@ -11,13 +11,14 @@ import LaunchAtLogin
 @main
 struct StillcolorApp: App {
     @AppStorage("disableDithering") var disableDithering: Bool = true
+    @AppStorage("ditherExternalOnly") var ditherExternalOnly: Bool = false
     @AppStorage("disableUniformity2D") var disableUniformity2D: Bool = false
-    
+
     var detector = ScreenDetector();
-    
+
     init() {
         detector.addObervers()
-        Stillcolor.enableDisableDithering(disableDithering)
+        Stillcolor.enableDisableDithering(disableDithering, externalOnly: ditherExternalOnly)
         Stillcolor.enableDisableUniformity2D(disableUniformity2D)
     }
     
@@ -30,10 +31,21 @@ struct StillcolorApp: App {
                 get: { disableDithering },
                 set: {
                     disableDithering = $0
-                    Stillcolor.enableDisableDithering(disableDithering)
+                    Stillcolor.enableDisableDithering(disableDithering, externalOnly: ditherExternalOnly)
                 }
             ))
-            
+
+            Toggle("External Displays Only", isOn: .init(
+                get: { ditherExternalOnly },
+                set: {
+                    ditherExternalOnly = $0
+                    Stillcolor.enableDisableDithering(disableDithering, externalOnly: ditherExternalOnly)
+                }
+            ))
+            .disabled(!disableDithering)
+
+            Divider()
+
             Toggle("Disable uniformity2D", isOn: .init(
                 get: { disableUniformity2D },
                 set: {
