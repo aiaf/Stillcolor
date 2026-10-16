@@ -8,17 +8,28 @@
 import SwiftUI
 import LaunchAtLogin
 
+class AppDelegate: NSObject, NSApplicationDelegate {
+    private let detector = ScreenDetector()
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        detector.addObservers()
+        Stillcolor.applySavedPreferences()
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        detector.removeObservers()
+    }
+}
+
 @main
 struct StillcolorApp: App {
-    @AppStorage("disableDithering") var disableDithering: Bool = true
-    @AppStorage("disableUniformity2D") var disableUniformity2D: Bool = false
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    var detector = ScreenDetector();
+    @AppStorage(PreferenceKey.disableDithering) var disableDithering: Bool = true
+    @AppStorage(PreferenceKey.disableUniformity2D) var disableUniformity2D: Bool = false
     
     init() {
-        detector.addObervers()
-        Stillcolor.enableDisableDithering(disableDithering)
-        Stillcolor.enableDisableUniformity2D(disableUniformity2D)
+        PreferenceKey.registerDefaults()
     }
     
     var body: some Scene {

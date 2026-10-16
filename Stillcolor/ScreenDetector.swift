@@ -12,6 +12,8 @@ class ScreenDetector {
     
     var timer: Timer?
 
+    // CoreGraphics delivers reconfiguration callbacks on the main run loop,
+    // so scheduling the timer here puts it on the main run loop too
     static let callback: CGDisplayReconfigurationCallBack = { (displayId, flags, userInfo) in
         guard let opaque = userInfo else {
             return
@@ -27,12 +29,12 @@ class ScreenDetector {
     }
     
     @objc func ensurePreferences() {
-        Stillcolor.enableDisableDithering(UserDefaults.standard.bool(forKey: "disableDithering"))
+        Stillcolor.applySavedPreferences()
         self.timer?.invalidate()
     }
     
 
-    func addObervers() {
+    func addObservers() {
         let userData = Unmanaged<ScreenDetector>.passUnretained(self).toOpaque()
         CGDisplayRegisterReconfigurationCallback(ScreenDetector.callback, userData)
     }

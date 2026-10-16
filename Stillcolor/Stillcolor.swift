@@ -15,9 +15,29 @@ enum DisplayLocation {
     case External
 }
 
+enum PreferenceKey {
+    static let disableDithering = "disableDithering"
+    static let disableUniformity2D = "disableUniformity2D"
+
+    // @AppStorage defaults aren't written to UserDefaults, so register the same defaults
+    // for code that reads UserDefaults directly
+    static func registerDefaults() {
+        UserDefaults.standard.register(defaults: [
+            disableDithering: true,
+            disableUniformity2D: false,
+        ])
+    }
+}
+
 class Stillcolor {
     private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "IOKit")
+    private static var hasShownAlert = false
 
+    static func applySavedPreferences() {
+        let defaults = UserDefaults.standard
+        enableDisableDithering(defaults.bool(forKey: PreferenceKey.disableDithering))
+        enableDisableUniformity2D(defaults.bool(forKey: PreferenceKey.disableUniformity2D))
+    }
     
     static func setPropertiesOnDisplayDriver(_ props : Dictionary<String, CFTypeRef>, _ targetDisplayLocation: DisplayLocation = .All) {
         var iterator = io_iterator_t()
@@ -38,32 +58,27 @@ class Stillcolor {
         let ret = IOServiceGetMatchingServices(kIOMainPortDefault, IOServiceMatching("IOMobileFramebufferAP"), &iterator)
         
         if iterator == IO_OBJECT_NULL || ret != KERN_SUCCESS {
-            let message = "Could not find services matching IOMobileFramebufferAP"
-            logger.error("\(message)")
+            let message = "Could not query services matching IOMobileFramebufferAP: \(String(cString: mach_error_string(ret)))"
+            logger.error("\(message, privacy: .public)")
             self.alert(message)
             return
         }
         
-        var service: io_service_t = IO_OBJECT_NULL
         // Some code portions here are from the Monitor Control project, thanks!
-        let name = UnsafeMutablePointer<CChar>.allocate(capacity: MemoryLayout<io_name_t>.size)
-        defer {
-            name.deallocate()
-        }
+        // An empty match still returns KERN_SUCCESS with a valid iterator, so count matches ourselves
+        var matchedServices = 0
+        var failures: [String] = []
         
         while true {
-            service = IOIteratorNext(iterator)
-            defer { IOObjectRelease(service) }
-            
-            if service == 0 {
+            let service = IOIteratorNext(iterator)
+            if service == IO_OBJECT_NULL {
                 break
             }
-            
-            guard IORegistryEntryGetName(service, name) == KERN_SUCCESS else {
-                continue
-            }
+            defer { IOObjectRelease(service) }
+            matchedServices += 1
             
             let displayIsExternal = IORegistryPropertyHelper.bool("external", service) ?? false
+            let displayDescription = displayIsExternal ? "external" : "embedded"
             
             if displayIsExternal {
                 if targetDisplayLocation == .Embedded {
@@ -77,14 +92,29 @@ class Stillcolor {
             // So we need to set them individually
             for (propKey, newVal) in props {
                 
-                if CFEqual(newVal, IORegistryPropertyHelper.CFValueForKey(propKey, service)) {
+                // CFEqual traps on NULL, so a missing property must be checked first
+                if let currentVal = IORegistryPropertyHelper.CFValueForKey(propKey, service), CFEqual(newVal, currentVal) {
                     continue
                 }
                 
                 let ret = IORegistryEntrySetCFProperty(service, propKey as CFString, newVal)
+                let result = String(cString: mach_error_string(ret))
                 
-                logger.info("Setting I/O Registry property \(String(propKey)) = \(String(describing: newVal)) on \(displayIsExternal ? "external": "embedded") display -> \"\(String(cString: mach_error_string(ret)))\"")
+                if ret == KERN_SUCCESS {
+                    logger.info("Set I/O Registry property \(propKey, privacy: .public) = \(String(describing: newVal), privacy: .public) on \(displayDescription, privacy: .public) display")
+                } else {
+                    logger.error("Failed to set I/O Registry property \(propKey, privacy: .public) = \(String(describing: newVal), privacy: .public) on \(displayDescription, privacy: .public) display -> \"\(result, privacy: .public)\"")
+                    failures.append("\(propKey) on \(displayDescription) display: \(result)")
+                }
             }
+        }
+
+        if matchedServices == 0 {
+            let message = "No compatible displays found (no services matching IOMobileFramebufferAP). Stillcolor requires an Apple silicon Mac."
+            logger.error("\(message, privacy: .public)")
+            self.alert(message)
+        } else if !failures.isEmpty {
+            self.alert("Could not change display settings:\n" + failures.joined(separator: "\n"))
         }
     }
 
@@ -100,22 +130,28 @@ class Stillcolor {
         ], .Embedded)
     }
     
+    // Shows at most one alert per launch so repeated display reconfigurations don't stack modals
     static func alert(_ message: String) {
-        let alert = NSAlert()
-        alert.messageText = "Stillcolor Issue"
-        alert.informativeText = message
-        alert.addButton(withTitle: "OK")
-        alert.alertStyle = .critical
-        alert.runModal()
+        if hasShownAlert {
+            return
+        }
+        hasShownAlert = true
+
+        DispatchQueue.main.async {
+            let alert = NSAlert()
+            alert.messageText = "Stillcolor Issue"
+            alert.informativeText = message
+            alert.addButton(withTitle: "OK")
+            alert.alertStyle = .critical
+            // Menu bar apps aren't active by default, so bring the alert to the front
+            NSApp.activate(ignoringOtherApps: true)
+            alert.runModal()
+        }
     }
     
     //MARK: - CF utils
     
     static func CFBooleanFromBool(_ value : Bool) -> CFBoolean {
         return value ? kCFBooleanTrue : kCFBooleanFalse
-    }
-    
-    static func CFNumberFromInteger(_ value: UInt32) -> CFNumber {
-        return NSNumber(value: value) as CFNumber
     }
 }
